@@ -1723,17 +1723,6 @@ install_ubuntu_restart_daemons() {
 }
 
 install_ubuntu_check_services() {
-    for fname in minion master syndic; do
-        # Skip if not meant to be installed
-        [ $fname = "minion" ] && [ $_INSTALL_MINION -eq $BS_FALSE ] && continue
-        [ $fname = "master" ] && [ $_INSTALL_MASTER -eq $BS_FALSE ] && continue
-        [ $fname = "syndic" ] && [ $_INSTALL_SYNDIC -eq $BS_FALSE ] && continue
-        if [ -f /sbin/initctl ] && [ -f /etc/init/salt-${fname}.conf ]; then
-            __check_services_upstart salt-$fname || return 1
-        elif [ -f /etc/init.d/salt-$fname ]; then
-            __check_services_debian salt-$fname || return 1
-        fi
-    done
     return 0
 }
 #
